@@ -92,6 +92,25 @@ async function run() {
       );
       res.json(result);
     });
+    //users data adding
+    app.put("/users/admin", async (req, res) => {
+      const email = req.body.email;
+      const filter = { email: email };
+      const updateDoc = { $set: { role: "admin" } };
+      const result = await usersCollection.updateOne(filter, updateDoc);
+      res.json(result);
+    });
+    //users data adding
+    app.get("/users/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email: email };
+      const user = await usersCollection.findOne(query);
+      let isAdmin = false;
+      if (user?.role === "admin") {
+        isAdmin = true;
+      }
+      res.json({ admin: isAdmin });
+    });
     //orders data adding
     app.post("/orders", async (req, res) => {
       const order = req.body;
