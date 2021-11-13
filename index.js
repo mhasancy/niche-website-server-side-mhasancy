@@ -48,12 +48,6 @@ async function run() {
       const reviews = await cursor.toArray();
       res.send(reviews);
     });
-    //team data load
-    app.get("/team", async (req, res) => {
-      const cursor = teamCollection.find({});
-      const team = await cursor.toArray();
-      res.send(team);
-    });
     //blogs data load
     app.get("/blogs", async (req, res) => {
       const cursor = blogsCollection.find({});
@@ -66,7 +60,6 @@ async function run() {
       const orders = await cursor.toArray();
       res.send(orders);
     });
-
     //products data adding
     app.post("/products", async (req, res) => {
       const service = req.body;
@@ -79,7 +72,7 @@ async function run() {
       const result = await usersCollection.insertOne(user);
       res.json(result);
     });
-    //users data adding
+    //users data updating
     app.put("/users", async (req, res) => {
       const user = req.body;
       const filter = { email: user.email };
@@ -92,7 +85,7 @@ async function run() {
       );
       res.json(result);
     });
-    //users data adding
+    //admin data making
     app.put("/users/admin", async (req, res) => {
       const email = req.body.email;
       const filter = { email: email };
@@ -100,7 +93,7 @@ async function run() {
       const result = await usersCollection.updateOne(filter, updateDoc);
       res.json(result);
     });
-    //users data adding
+    //admin data checking
     app.get("/users/:email", async (req, res) => {
       const email = req.params.email;
       const query = { email: email };
